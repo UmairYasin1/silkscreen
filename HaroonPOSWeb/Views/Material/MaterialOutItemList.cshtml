@@ -1,0 +1,200 @@
+﻿@model List<HaroonPOSWeb.Models.MaterialOutItemModel>
+@{
+    ViewBag.Title = "Material-Out Item List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Material-Out Item
+                <a href="#" data-toggle="modal" data-target="#MaterialOutItemmodal" class="btn btn-primary btn-icon-split" onclick="AddMaterialOutItem(0)">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Add Item</span>
+                </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @Html.Partial("_Notifications")
+                <table class="table table-bordered" id="materialOutItemList" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th hidden>MatOutItemId</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>IsActive</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th hidden>MatOutItemId</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>IsActive</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.MaterialOutItemId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreateDate, new { @class = "createDateClass" })</td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        <td><span class="badge badge-success brd-rd5">Active</span></td>
+                                    }
+                                    else if (item.IsActive == false)
+                                    {
+                                        <td><span class="badge badge-danger brd-rd5">De-Active</span></td>
+                                    }
+                                    <td>
+                                        <button class="btn btn-info" onclick="ViewMaterialOutItem('@item.MaterialOutItemId')"><i class="fa fa-eye"></i></button>
+                                        <button class="btn btn-success" onclick="EditMaterialOutItem('@item.MaterialOutItemId')"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" onclick="ConfirmDeleteMaterialOutItem('@item.MaterialOutItemId')"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Model -->
+<div class="modal fade" id="MaterialOutItemmodal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="MaterialOutItemdiv">
+
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div id="MaterialOutItemEditModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="MaterialOutItemEditModaldiv">
+        </div>
+    </div>
+</div>
+<!-- View Modal -->
+<div id="ViewMaterialOutItem" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Item Detail</h4>
+            </div>
+            <div class="modal-body" id="ViewMaterialOutItemdiv">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteMaterialOutItem">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title">Delete Item</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure ? You want to delete this. </h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-danger" onclick="DeleteMaterialOutItem()">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hiddenMaterialOutItemId" />
+
+
+@section scripts{
+
+    <script>
+
+        var tableMaterial;
+
+        $(document).ready(function () {
+            tableMaterial = $('#materialOutItemList').dataTable();
+        });
+        var AddMaterialOutItem = function (MaterialOutItemId) {
+            var url = "/Material/MaterialOutItemSetup";
+            $("#MaterialOutItemdiv").load(url, function () {
+                $("#MaterialOutItemmodal").modal("show");
+                $("#title").text("Add Item");
+            });
+        }
+
+        var EditMaterialOutItem = function (MaterialOutItemId) {
+            var url = "/Material/MaterialOutItemEditView?MaterialOutItemId=" + MaterialOutItemId;
+            $("#MaterialOutItemEditModaldiv").load(url, function () {
+                $("#MaterialOutItemEditModal").modal("show");
+                $("#title").text("Edit Item");
+            });
+        }
+
+        var ViewMaterialOutItem = function (MaterialOutItemId) {
+            var url = "/Material/ViewMaterialOutItem?MaterialOutItemId=" + MaterialOutItemId;
+            $("#ViewMaterialOutItemdiv").load(url, function () {
+                $("#ViewMaterialOutItem").modal("show");
+            })
+        }
+
+        var ConfirmDeleteMaterialOutItem = function (MaterialOutItemId) {
+            $("#hiddenMaterialOutItemId").val(MaterialOutItemId);
+            $("#DeleteMaterialOutItem").modal('show');
+
+        }
+
+        var DeleteMaterialOutItem = function () {
+            var MaterialOutItemId = $("#hiddenMaterialOutItemId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Material/DeleteMaterialOutItem",
+                data: { MaterialOutItemId: MaterialOutItemId },
+                success: function (data) {
+                    if (data.success) {
+                        $("#DeleteMaterialOutItem").modal("hide");
+                        swal({
+                            title: "Good job!",
+                            text: data.message,
+                            type: "success"
+                        },
+                        function () {
+                            location.reload();
+                        })
+                    }
+                    else {
+                        swal({
+                            title: "Warning!",
+                            text: data.message,
+                            type: "error"
+                        })
+                    }
+                }
+
+            });
+
+        }
+
+        $(function () {
+            $('.createDateClass').each(function () {
+                var d = moment($(this).attr('.createDateClass'));
+                $(this).html(d.format());
+            });
+        });
+    </script>
+}

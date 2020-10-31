@@ -1,0 +1,199 @@
+﻿@model List<HaroonPOSWeb.Models.MaterialModel>
+@{
+    ViewBag.Title = "Material List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Material List
+                <a href="#" data-toggle="modal" data-target="#Materialmodal" class="btn btn-primary btn-icon-split" onclick="AddMaterial(0)">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Add Material</span>
+                </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @Html.Partial("_Notifications")
+                <table class="table table-bordered" id="materialList" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th hidden>MaterialId</th>
+                            <th>MaterialNo</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th hidden>MaterialId</th>
+                            <th>MaterialNo</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.MaterialId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaterialNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreateDate, new { @class="createDateClass" })</td>
+                                    <td>
+                                        <button class="btn btn-info" onclick="ViewMaterial('@item.MaterialId')"><i class="fa fa-eye"></i></button>
+                                        <button class="btn btn-success" onclick="EditMaterial('@item.MaterialId')"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" onclick="ConfirmDeleteMaterial('@item.MaterialId')"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Model -->
+<div class="modal fade" id="Materialmodal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="Materialdiv">
+
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div id="MaterialEditModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="MaterialEditModaldiv">
+        </div>
+    </div>
+</div>
+<!-- View Modal -->
+<div id="ViewMaterial" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Material Detail</h4>
+            </div>
+            <div class="modal-body" id="ViewMaterialdiv">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteMaterial">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title">Delete Material</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure ? You want to delete this. </h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-danger" onclick="DeleteMaterial()">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hiddenMaterialId" />
+
+
+@section scripts{
+
+    <script>
+
+        var tableMaterial;
+
+        $(document).ready(function () {
+            tableMaterial = $('#materialList').dataTable();
+        });
+        var AddMaterial = function (MaterialId) {
+            var url = "/Material/MaterialSetup";
+            $("#Materialdiv").load(url, function () {
+                $("#Materialmodal").modal("show");
+                $("#title").text("Add Material");
+            });
+        }
+
+        var EditMaterial = function (MaterialId) {
+            var url = "/Material/MaterialEditView?MaterialId=" + MaterialId;
+            $("#MaterialEditModaldiv").load(url, function () {
+                $("#MaterialEditModal").modal("show");
+                $("#title").text("Edit Material");
+            });
+        }
+
+        var ViewMaterial = function (MaterialId) {
+            var url = "/Material/ViewMaterial?MaterialId=" + MaterialId;
+            $("#ViewMaterialdiv").load(url, function () {
+                $("#ViewMaterial").modal("show");
+            })
+        }
+
+        var ConfirmDeleteMaterial = function (MaterialId) {
+            $("#hiddenMaterialId").val(MaterialId);
+            $("#DeleteMaterial").modal('show');
+
+        }
+
+        var DeleteMaterial = function () {
+            var MaterialId = $("#hiddenMaterialId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Material/DeleteMaterial",
+                data: { MaterialId: MaterialId },
+                success: function (data) {
+                    if (data.success) {
+                        $("#DeleteMaterial").modal("hide");
+                        swal({
+                            title: "Good job!",
+                            text: data.message,
+                            type: "success"
+                        },
+                        function () {
+                            location.reload();
+                        })
+                    }
+                    else {
+                        swal({
+                            title: "Warning!",
+                            text: data.message,
+                            type: "error"
+                        })
+                    }
+                }
+
+            });
+
+        }
+
+        $(function () {
+            $('.createDateClass').each(function () {
+                var d = moment($(this).attr('.createDateClass'));
+                $(this).html(d.format());
+            });
+        });
+    </script>
+}

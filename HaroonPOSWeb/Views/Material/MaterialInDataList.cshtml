@@ -1,0 +1,213 @@
+﻿@model List<HaroonPOSWeb.Models.MaterialInModel>
+@{
+    ViewBag.Title = "Material-In List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    HaroonPOSWebEntities db = new HaroonPOSWebEntities();
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Material-In
+                <a href="#" data-toggle="modal" data-target="#MaterialInDatamodal" class="btn btn-primary btn-icon-split" onclick="AddMaterialInData(0)">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Add Data</span>
+                </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @Html.Partial("_Notifications")
+                <table class="table table-bordered" id="materialInDataList" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th hidden>MaterialInId</th>
+                            <th>No</th>
+                            <th>Purchaser</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Quality</th>
+                            <th>Size</th>
+                            <th>Cartridge</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th hidden>MaterialInId</th>
+                            <th>No</th>
+                            <th>Purchaser</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Quality</th>
+                            <th>Size</th>
+                            <th>Cartridge</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item != null)
+                            {
+                                var purchaserName = db.MaterialInPurchasers.Where(x => x.MatInPurchaserId.Equals(item.MatInPurchaserId.Value)).Select(x => x.Name).FirstOrDefault();
+                                <tr>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.MaterialInId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaterialInNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => purchaserName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PurchaseItem)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Rate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Quality)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Size)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Cartridge)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreateDate, new { @class = "createDateClass" })</td>
+                                    <td>
+                                        <button class="btn btn-info" onclick="ViewMaterialInData('@item.MaterialInId')"><i class="fa fa-eye"></i></button>
+                                        <button class="btn btn-success" onclick="EditMaterialInData('@item.MaterialInId')"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" onclick="ConfirmDeleteMaterialInData('@item.MaterialInId')"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Model -->
+<div class="modal fade" id="MaterialInDatamodal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="MaterialInDatadiv">
+
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div id="MaterialInDataEditModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="MaterialInDataEditModaldiv">
+        </div>
+    </div>
+</div>
+<!-- View Modal -->
+<div id="ViewMaterialInData" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Detail</h4>
+            </div>
+            <div class="modal-body" id="ViewMaterialInDatadiv">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteMaterialInData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure ? You want to delete this. </h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-danger" onclick="DeleteMaterialInData()">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hiddenMaterialInDataId" />
+
+
+@section scripts{
+
+    <script>
+
+        var tableMaterial;
+
+        $(document).ready(function () {
+            tableMaterial = $('#materialInDataList').dataTable();
+        });
+        var AddMaterialInData = function (MaterialInId) {
+            var url = "/Material/MaterialInDataSetup";
+            $("#MaterialInDatadiv").load(url, function () {
+                $("#MaterialInDatamodal").modal("show");
+                $("#title").text("Add");
+            });
+        }
+
+        var EditMaterialInData = function (MaterialInId) {
+            var url = "/Material/MaterialInDataEditView?MaterialInId=" + MaterialInId;
+            $("#MaterialInDataEditModaldiv").load(url, function () {
+                $("#MaterialInDataEditModal").modal("show");
+                $("#title").text("Edit");
+            });
+        }
+
+        var ViewMaterialInData = function (MaterialInId) {
+            var url = "/Material/ViewMaterialInData?MaterialInId=" + MaterialInId;
+            $("#ViewMaterialInDatadiv").load(url, function () {
+                $("#ViewMaterialInData").modal("show");
+            })
+        }
+
+        var ConfirmDeleteMaterialInData = function (MaterialInId) {
+            $("#hiddenMaterialInDataId").val(MaterialInId);
+            $("#DeleteMaterialInData").modal('show');
+
+        }
+
+        var DeleteMaterialInData = function () {
+            var MaterialInId = $("#hiddenMaterialInDataId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Material/DeleteMaterialInData",
+                data: { MaterialInId: MaterialInId },
+                success: function (data) {
+                    if (data.success) {
+                        $("#DeleteMaterialInData").modal("hide");
+                        swal({
+                            title: "Good job!",
+                            text: data.message,
+                            type: "success"
+                        },
+                        function () {
+                            location.reload();
+                        })
+                    }
+                    else {
+                        swal({
+                            title: "Warning!",
+                            text: data.message,
+                            type: "error"
+                        })
+                    }
+                }
+
+            });
+
+        }
+
+        $(function () {
+            $('.createDateClass').each(function () {
+                var d = moment($(this).attr('.createDateClass'));
+                $(this).html(d.format());
+            });
+        });
+    </script>
+}

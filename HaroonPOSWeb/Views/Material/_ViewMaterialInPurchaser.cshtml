@@ -1,0 +1,37 @@
+﻿
+<div class="form-body">
+    @if (ViewBag.ViewMaterialInPurchaserDataList != null)
+    {
+        foreach (var item in ViewBag.ViewMaterialInPurchaserDataList)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tr hidden>
+                                <td><b>MatInPurchaserId</b></td>
+                                <td>@item.MatInPurchaserId</td>
+                            </tr>
+                            <tr>
+                                <td><b>Name</b></td>
+                                <td>@item.Name</td>
+                            </tr>
+                            <tr>
+                                <td><b>IsActive</b></td>
+                                @if (item.IsActive == true)
+                                {
+                                    <td><span class="badge badge-success brd-rd5">Active</span></td>
+                                }
+                                else if (item.IsActive == false)
+                                {
+                                    <td><span class="badge badge-danger brd-rd5">De-Active</span></td>
+                                }
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+

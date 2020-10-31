@@ -1,0 +1,37 @@
+﻿<div class="form-body">
+    @if (ViewBag.ViewMaterialDataList != null)
+    {
+        foreach (var item in ViewBag.ViewMaterialDataList)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tr hidden>
+                                <td><b>Material Id</b></td>
+                                <td>@item.MaterialId</td>
+                            </tr>
+                            <tr>
+                                <td><b>Material No</b></td>
+                                <td>@item.MaterialNo</td>
+                            </tr>
+                            <tr>
+                                <td><b>Name</b></td>
+                                <td>@item.Name</td>
+                            </tr>
+                            <tr>
+                                <td><b>Quantity</b></td>
+                                <td>@item.Quantity</td>
+                            </tr>
+                            <tr>
+                                <td><b>Price</b></td>
+                                <td>@item.Price</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+

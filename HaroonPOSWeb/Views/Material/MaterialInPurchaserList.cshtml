@@ -1,0 +1,200 @@
+﻿@model List<HaroonPOSWeb.Models.MaterialInPurchaserModel>
+@{
+    ViewBag.Title = "Material-In Purchaser List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Material-In Purchaser
+                <a href="#" data-toggle="modal" data-target="#MaterialInPurchasermodal" class="btn btn-primary btn-icon-split" onclick="AddMaterialInPurchaser(0)">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Add Purchaser</span>
+                </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @Html.Partial("_Notifications")
+                <table class="table table-bordered" id="materialInPurchaserList" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th hidden>MatInPurchaserId</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>IsActive</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th hidden>MatInPurchaserId</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>IsActive</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.MatInPurchaserId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreateDate, new { @class = "createDateClass" })</td>
+                                    @if (item.IsActive == true)
+                                    {
+                                        <td><span class="badge badge-success brd-rd5">Active</span></td>
+                                    }
+                                    else if (item.IsActive == false)
+                                    {
+                                        <td><span class="badge badge-danger brd-rd5">De-Active</span></td>
+                                    }
+                                    <td>
+                                        <button class="btn btn-info" onclick="ViewMaterialInPurchaser('@item.MatInPurchaserId')"><i class="fa fa-eye"></i></button>
+                                        <button class="btn btn-success" onclick="EditMaterialInPurchaser('@item.MatInPurchaserId')"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" onclick="ConfirmDeleteMaterialInPurchaser('@item.MatInPurchaserId')"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Model -->
+<div class="modal fade" id="MaterialInPurchasermodal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="MaterialInPurchaserdiv">
+
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div id="MaterialInPurchaserEditModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="MaterialInPurchaserEditModaldiv">
+        </div>
+    </div>
+</div>
+<!-- View Modal -->
+<div id="ViewMaterialInPurchaser" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Purchaser Detail</h4>
+            </div>
+            <div class="modal-body" id="ViewMaterialInPurchaserdiv">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteMaterialInPurchaser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title">Delete Purchaser</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure ? You want to delete this. </h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-danger" onclick="DeleteMaterialInPurchaser()">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hiddenMaterialInPurchaserId" />
+
+
+@section scripts{
+
+    <script>
+
+        var tableMaterial;
+
+        $(document).ready(function () {
+            tableMaterial = $('#materialInPurchaserList').dataTable();
+        });
+        var AddMaterialInPurchaser = function (MatInPurchaserId) {
+            var url = "/Material/MaterialInPurchaserSetup";
+            $("#MaterialInPurchaserdiv").load(url, function () {
+                $("#MaterialInPurchasermodal").modal("show");
+                $("#title").text("Add Purchaser");
+            });
+        }
+
+        var EditMaterialInPurchaser = function (MatInPurchaserId) {
+            var url = "/Material/MaterialInPurchaserEditView?MatInPurchaserId=" + MatInPurchaserId;
+            $("#MaterialInPurchaserEditModaldiv").load(url, function () {
+                $("#MaterialInPurchaserEditModal").modal("show");
+                $("#title").text("Edit Purchaser");
+            });
+        }
+
+        var ViewMaterialInPurchaser = function (MatInPurchaserId) {
+            var url = "/Material/ViewMaterialInPurchaser?MatInPurchaserId=" + MatInPurchaserId;
+            $("#ViewMaterialInPurchaserdiv").load(url, function () {
+                $("#ViewMaterialInPurchaser").modal("show");
+            })
+        }
+
+        var ConfirmDeleteMaterialInPurchaser = function (MatInPurchaserId) {
+            $("#hiddenMaterialInPurchaserId").val(MatInPurchaserId);
+            $("#DeleteMaterialInPurchaser").modal('show');
+
+        }
+
+        var DeleteMaterialInPurchaser = function () {
+            var MatInPurchaserId = $("#hiddenMaterialInPurchaserId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Material/DeleteMaterialInPurchaser",
+                data: { MatInPurchaserId: MatInPurchaserId },
+                success: function (data) {
+                    if (data.success) {
+                        $("#DeleteMaterialInPurchaser").modal("hide");
+                        swal({
+                            title: "Good job!",
+                            text: data.message,
+                            type: "success"
+                        },
+                        function () {
+                            location.reload();
+                        })
+                    }
+                    else {
+                        swal({
+                            title: "Warning!",
+                            text: data.message,
+                            type: "error"
+                        })
+                    }
+                }
+
+            });
+
+        }
+
+        $(function () {
+            $('.createDateClass').each(function () {
+                var d = moment($(this).attr('.createDateClass'));
+                $(this).html(d.format());
+            });
+        });
+    </script>
+}

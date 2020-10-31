@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="edc400cc5036406f8beb59ef1bfe57b3" Name="Diagram1">
+        <EntityTypeShape EntityType="HaroonPOSWebModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.AdminUser" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.625" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.Material" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialIn" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialInPurchaser" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialOut" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialOutItem" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialOutParty" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.UserRight" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.UserRole" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.WebUser" Width="1.5" PointX="0.75" PointY="11.75" />
+        <AssociationConnector Association="HaroonPOSWebModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="HaroonPOSWebModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="HaroonPOSWebModel.AspNetUserRoles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

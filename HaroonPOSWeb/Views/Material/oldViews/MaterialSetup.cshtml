@@ -1,0 +1,49 @@
+﻿@model HaroonPOSWeb.Models.MaterialModel
+@{
+    ViewBag.Title = "Material Setup";
+    Layout = null;
+}
+@using (Html.BeginForm("MaterialSetup", "Material", FormMethod.Post, new { role = "form" }))
+{
+    <div class="modal-header">
+        <h5 class="modal-title"><label id="title"></label></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+            <div class="modal-body">
+                <div class="form-body">
+                    @Html.HiddenFor(m => m.MaterialId)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Name </label>
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Quantity </label>
+                                @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Price in PKR </label>
+                                @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                <input type="submit" name="send" value="Save" id="btnMaterial" class="btn btn-primary waves-effect" />
+            </div>
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

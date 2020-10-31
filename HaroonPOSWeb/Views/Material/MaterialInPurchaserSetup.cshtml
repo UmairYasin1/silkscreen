@@ -1,0 +1,40 @@
+﻿@model HaroonPOSWeb.Models.MaterialInPurchaserModel
+@{
+    ViewBag.Title = "Material In Purchaser";
+    Layout = null;
+}
+@using (Html.BeginForm("MaterialInPurchaserSetup", "Material", FormMethod.Post, new { role = "form" }))
+{
+    <div class="modal-header">
+        <h5 class="modal-title"><label id="title"></label></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            @Html.HiddenFor(m => m.MatInPurchaserId)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Name </label>
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Is Active </label>
+                        @Html.CheckBoxFor(model => model.IsActive)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" name="send" value="Save" id="btnMaterial" class="btn btn-primary waves-effect" />
+            </div>
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

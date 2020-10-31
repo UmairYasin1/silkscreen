@@ -1,0 +1,104 @@
+﻿@model HaroonPOSWeb.Models.MaterialInModel
+@{
+    ViewBag.Title = "MaterialInPurchaserLedgerList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Purchaser Legder
+                @Html.DropDownListFor(model => model.MatInPurchaserId, ViewBag.MatInPurchaserList as SelectList, "--select--")
+                <button id="SearchButton" class="btn btn-info">Search</button>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="MaterialInPurchaserLedgerList" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quality</th>
+                            <th>Quantity</th>
+                            <th>Size</th>
+                            <th>Rate</th>
+                            @*<th>Sub Amount</th>*@
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quality</th>
+                            <th>Quantity</th>
+                            <th>Size</th>
+                            <th>Rate</th>
+                            @*<th>Sub Amount</th>*@
+                        </tr>
+                    </tfoot>                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+
+        var tableMaterial;
+
+        $(document).ready(function () {
+            tableMaterial = $('#MaterialInPurchaserLedgerList').dataTable();
+        });
+        
+
+        $("#SearchButton").on("click", function (event) {
+            var MatInPurchaserId = $("#MatInPurchaserId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Material/GetMatInPurchaserLegder",
+                data: { MatInPurchaserId: MatInPurchaserId },
+                success: function (data) {
+                    if (data.success) {
+                        Table = $("#MaterialInPurchaserLedgerList").DataTable({
+                            data: [],
+                            columns: [
+                                        { "data": "PurchaseItem" },
+                                        { "data": "Quality" },
+                                        { "data": "Quantity" },
+                                        { "data": "Size" },
+                                        { "data": "Rate" }
+                            ],
+                            rowCallback: function (row, data) { },
+                            filter: false,
+                            info: false,
+                            ordering: false,
+                            processing: true,
+                            retrieve: true
+                        });
+                        Table.clear().draw();
+                        Table.rows.add(result).draw();
+                    }
+                    else {
+                        swal({
+                            title: "Warning!",
+                            text: data.message,
+                            type: "error"
+                        })
+                    }
+                }
+
+            });
+
+        });
+
+        $(function () {
+            $('.createDateClass').each(function () {
+                var d = moment($(this).attr('.createDateClass'));
+                $(this).html(d.format());
+            });
+        });
+    </script>
+}
