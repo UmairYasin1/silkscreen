@@ -163,6 +163,13 @@
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="Month">
+          <Key>
+            <PropertyRef Name="MonthId" />
+          </Key>
+          <Property Name="MonthId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MonthName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="UserRight">
           <Key>
             <PropertyRef Name="UserRightsId" />
@@ -212,6 +219,13 @@
           <Property Name="CoverImage" Type="nvarchar(max)" />
           <Property Name="DeviceId" Type="nvarchar(max)" />
           <Property Name="HeadLine" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="YearId" />
+          </Key>
+          <Property Name="YearId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YearName" Type="int" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -283,9 +297,11 @@
           <EntitySet Name="MaterialOut" EntityType="Self.MaterialOut" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialOutItem" EntityType="Self.MaterialOutItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialOutParty" EntityType="Self.MaterialOutParty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Month" EntityType="Self.Month" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRight" EntityType="Self.UserRight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebUsers" EntityType="Self.WebUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Year" EntityType="Self.Year" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -335,6 +351,8 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Months" EntityType="HaroonPOSWebModel.Month" />
+          <EntitySet Name="Years" EntityType="HaroonPOSWebModel.Year" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -574,6 +592,20 @@
           <End Type="HaroonPOSWebModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="HaroonPOSWebModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="Month">
+          <Key>
+            <PropertyRef Name="MonthId" />
+          </Key>
+          <Property Name="MonthId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MonthName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="YearId" />
+          </Key>
+          <Property Name="YearId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YearName" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -800,6 +832,22 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Months">
+            <EntityTypeMapping TypeName="HaroonPOSWebModel.Month">
+              <MappingFragment StoreEntitySet="Month">
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Years">
+            <EntityTypeMapping TypeName="HaroonPOSWebModel.Year">
+              <MappingFragment StoreEntitySet="Year">
+                <ScalarProperty Name="YearName" ColumnName="YearName" />
+                <ScalarProperty Name="YearId" ColumnName="YearId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

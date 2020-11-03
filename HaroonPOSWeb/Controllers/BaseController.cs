@@ -70,5 +70,17 @@ namespace HaroonPOSWeb.Controllers
             List<MaterialInPurchaser> listMatInPurchaser = db.MaterialInPurchasers.ToList();
             ViewBag.MatInPurchaserList = new SelectList(listMatInPurchaser, "MatInPurchaserId", "Name");
         }
+
+        public void GetMonthList()
+        {
+            List<Month> listMonth = db.Months.ToList();
+            ViewBag.MonthList = new SelectList(listMonth, " MonthId", "MonthName");
+        }
+
+        public void GetYearList()
+        {
+            List<Year> listYear = db.Years.ToList();
+            ViewBag.YearList = new SelectList(listYear, "YearId", "YearName");
+        }
     }
 }

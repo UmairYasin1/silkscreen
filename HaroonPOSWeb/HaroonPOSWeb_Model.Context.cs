@@ -40,5 +40,7 @@ namespace HaroonPOSWeb
         public virtual DbSet<UserRight> UserRights { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<WebUser> WebUsers { get; set; }
+        public virtual DbSet<Month> Months { get; set; }
+        public virtual DbSet<Year> Years { get; set; }
     }
 }

@@ -20,5 +20,6 @@ namespace HaroonPOSWeb.Common
             public static bool IsDelete = true;
             public static bool IsSelect = true;
         }
+
     }
 }

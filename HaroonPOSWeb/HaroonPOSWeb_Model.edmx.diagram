@@ -23,6 +23,8 @@
         <AssociationConnector Association="HaroonPOSWebModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="HaroonPOSWebModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="HaroonPOSWebModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.Month" Width="1.5" PointX="3.375" PointY="11.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.Year" Width="1.5" PointX="5.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
