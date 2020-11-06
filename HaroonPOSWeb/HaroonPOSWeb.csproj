@@ -294,8 +294,10 @@
     <Compile Include="Models\MaterialInPurchaserModel.cs" />
     <Compile Include="Models\MaterialModel.cs" />
     <Compile Include="Models\MaterialOutItemModel.cs" />
+    <Compile Include="Models\MaterialOutModel.cs" />
     <Compile Include="Models\MaterialOutPartyModel.cs" />
     <Compile Include="Models\PartyPurchaseLedgerModel.cs" />
+    <Compile Include="Models\PartyPurchaseSaleModel.cs" />
     <Compile Include="Month.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
@@ -4432,6 +4434,11 @@
     <Content Include="Views\Material\MaterialInDataSetup.cshtml" />
     <Content Include="Views\Material\MaterialInPurchaserLedgerList.cshtml" />
     <Content Include="Views\Report\PartyPurchaseLedger.cshtml" />
+    <Content Include="Views\Material\MaterialOutDataList.cshtml" />
+    <Content Include="Views\Material\MaterialOutDataSetup.cshtml" />
+    <Content Include="Views\Material\_ViewMaterialOutData.cshtml" />
+    <Content Include="Views\Material\_ViewMaterialInData.cshtml" />
+    <Content Include="Views\Report\PartySaleLedger.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

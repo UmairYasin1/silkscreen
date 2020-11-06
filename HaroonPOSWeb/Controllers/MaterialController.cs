@@ -616,13 +616,13 @@ namespace HaroonPOSWeb.Controllers
             MaterialIn newFitCat = db.MaterialIns.Where(a => a.MaterialInId.Equals(MaterialInId)).FirstOrDefault();
             if (newFitCat != null)
             {
-                model.MatInPurchaserId = model.MatInPurchaserId;
-                model.PurchaseItem = model.PurchaseItem;
-                model.Quantity = model.Quantity;
-                model.Rate = model.Rate;
-                model.Quality = model.Quality;
-                model.Size = model.Size;
-                model.Cartridge = model.Cartridge;
+                model.MatInPurchaserId = newFitCat.MatInPurchaserId;
+                model.PurchaseItem = newFitCat.PurchaseItem;
+                model.Quantity = newFitCat.Quantity;
+                model.Rate = newFitCat.Rate;
+                model.Quality = newFitCat.Quality;
+                model.Size = newFitCat.Size;
+                model.Cartridge = newFitCat.Cartridge;
             }
             return View("MaterialInDataSetup", model);
         }
@@ -631,7 +631,23 @@ namespace HaroonPOSWeb.Controllers
         public ActionResult ViewMaterialInData(int MaterialInId)
         {
             List<MaterialIn> listitem = db.MaterialIns.Where(x => x.MaterialInId == MaterialInId).ToList();
-            ViewBag.ViewMaterialInDataList = listitem;
+            List<MaterialInModel> list = new List<MaterialInModel>();
+            foreach (var item in listitem)
+            {
+                var purchaserName = db.MaterialInPurchasers.Where(x => x.MatInPurchaserId.Equals(item.MatInPurchaserId.Value)).FirstOrDefault();
+                
+                list.Add(new MaterialInModel()
+                {
+                    MatInPurchaserName = purchaserName.Name,
+                    PurchaseItem = item.PurchaseItem,
+                    Quantity = item.Quantity,
+                    Rate = item.Rate,
+                    Quality = item.Quality,
+                    Size = item.Size,
+                    Cartridge = item.Cartridge
+                });
+            }
+            ViewBag.ViewMaterialInDataList = list;
             return PartialView("_ViewMaterialInData");
 
         }
@@ -706,8 +722,173 @@ namespace HaroonPOSWeb.Controllers
             return View(materialInDataModelList);
 
         }
-        
+
         #endregion
 
+
+
+        #region material out data
+
+
+        [HttpGet]
+        public ActionResult MaterialOutDataList()
+        {
+            checkUserAdmin();
+            if (Session["LogedAdminUserID"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            var materialOutDataList = db.MaterialOuts.ToList();
+
+            List<MaterialOutModel> materialOutDataModelList = new List<MaterialOutModel>();
+            if (materialOutDataList != null)
+            {
+                foreach (var item in materialOutDataList)
+                {
+                    materialOutDataModelList.Add(new MaterialOutModel
+                    {
+                        MaterialOutId = item.MaterialOutId,
+                        MaterialOutNo = item.MaterialOutNo,
+                        MatOutPartyId = item.MatOutPartyId,
+                        MaterialOutItemId = item.MaterialOutItemId,
+                        Quantity = item.Quantity,
+                        Rate = item.Rate,
+                        Description = item.Description,
+                        DCNumber = item.DCNumber,
+                        IsDebit = item.IsDebit.Value,
+                        IsCredit = item.IsCredit.Value,
+                        CreateDate = item.CreateDate.Value,
+                        IsActive = item.IsActive.Value
+                    });
+                }
+            }
+
+
+            return View(materialOutDataModelList);
+
+        }
+
+
+        [HttpGet]
+        public ActionResult MaterialOutDataSetup()
+        {
+            if (Session["LogedAdminUserID"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            else
+            {
+                GetMaterialOutPartyList();
+                GetMaterialOutItemList();
+                return View();
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult MaterialOutDataSetup(MaterialOutModel model)
+        {
+            System.Random random = new System.Random();
+            MaterialOut materialOutData = db.MaterialOuts.Where(a => a.MaterialOutId.Equals(model.MaterialOutId)).FirstOrDefault();
+            if (materialOutData == null)
+            {
+                MaterialOut newMaterialOutDataadd = new MaterialOut();
+                newMaterialOutDataadd.MaterialOutNo = "MatNo_" + random.Next();
+                newMaterialOutDataadd.MatOutPartyId = model.MatOutPartyId;
+                newMaterialOutDataadd.MaterialOutItemId = model.MaterialOutItemId;
+                newMaterialOutDataadd.Quantity = model.Quantity;
+                newMaterialOutDataadd.Rate = model.Rate;
+                newMaterialOutDataadd.Description = model.Description;
+                newMaterialOutDataadd.DCNumber = model.DCNumber;
+                newMaterialOutDataadd.IsDebit = false;
+                newMaterialOutDataadd.IsCredit = true;
+                newMaterialOutDataadd.CreateDate = DateTime.Now;
+                newMaterialOutDataadd.IsActive = true;
+                db.MaterialOuts.Add(newMaterialOutDataadd);
+                db.SaveChanges();
+                ModelState.Clear();
+                model = null;
+                this.AddNotification("Thats great! Successfully Saved.", NotificationType.SUCCESS);
+            }
+            else
+            {
+                materialOutData.MatOutPartyId = model.MatOutPartyId;
+                materialOutData.MaterialOutItemId = model.MaterialOutItemId;
+                materialOutData.Quantity = model.Quantity;
+                materialOutData.Rate = model.Rate;
+                materialOutData.Description = model.Description;
+                materialOutData.DCNumber = model.DCNumber;
+                db.SaveChanges();
+                model = null;
+                this.AddNotification("Thats great! Successfully Edited.", NotificationType.SUCCESS);
+            }
+            return RedirectToAction("MaterialOutDataList");
+        }
+
+
+        [HttpGet]
+        public ActionResult MaterialOutDataEditView(int MaterialOutId)
+        {
+            GetMaterialOutPartyList();
+            GetMaterialOutItemList();
+            MaterialOutModel model = new MaterialOutModel();
+            MaterialOut newFitCat = db.MaterialOuts.Where(a => a.MaterialOutId.Equals(MaterialOutId)).FirstOrDefault();
+            if (newFitCat != null)
+            {
+                model.MatOutPartyId = newFitCat.MatOutPartyId;
+                model.MaterialOutItemId = newFitCat.MaterialOutItemId;
+                model.Quantity = newFitCat.Quantity;
+                model.Rate = newFitCat.Rate;
+                model.Description = newFitCat.Description;
+                model.DCNumber = newFitCat.DCNumber;
+            }
+            return View("MaterialOutDataSetup", model);
+        }
+
+
+        public ActionResult ViewMaterialOutData(int MaterialOutId)
+        {
+            List<MaterialOut> listitem = db.MaterialOuts.Where(x => x.MaterialOutId == MaterialOutId).ToList();
+            List<MaterialOutModel> list = new List<MaterialOutModel>();
+            foreach (var item in listitem)
+            {
+                var partyName = db.MaterialOutParties.Where(x => x.MatOutPartyId.Equals(item.MatOutPartyId.Value)).FirstOrDefault();
+                var outItem = db.MaterialOutItems.Where(x => x.MaterialOutItemId.Equals(item.MaterialOutItemId.Value)).FirstOrDefault();
+
+                list.Add(new MaterialOutModel()
+                {
+                    MatOutPartyName = partyName.Name,
+                    MaterialOutItemName = outItem.Name,
+                    Quantity = item.Quantity,
+                    Rate = item.Rate,
+                    Description = item.Description,
+                    DCNumber = item.DCNumber
+                });
+            }
+            
+            ViewBag.ViewMaterialOutDataList = list;
+            return PartialView("_ViewMaterialOutData");
+
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMaterialOutData(int MaterialOutId)
+        {
+            MaterialOut newFitCat = db.MaterialOuts.Where(a => a.MaterialOutId.Equals(MaterialOutId)).FirstOrDefault();
+            if (newFitCat != null)
+            {
+                db.Entry(newFitCat).State = EntityState.Deleted;
+                db.SaveChanges();
+                ModelState.Clear();
+                return Json(new { success = true, message = "Data Delete" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { error = true, message = "Unsuccessfull" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion
     }
 }

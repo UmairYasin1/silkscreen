@@ -82,5 +82,17 @@ namespace HaroonPOSWeb.Controllers
             List<Year> listYear = db.Years.ToList();
             ViewBag.YearList = new SelectList(listYear, "YearId", "YearName");
         }
+
+        public void GetMaterialOutPartyList()
+        {
+            List<MaterialOutParty> listMatOutParty = db.MaterialOutParties.ToList();
+            ViewBag.MaterialOutPartiesList = new SelectList(listMatOutParty, "MatOutPartyId", "Name");
+        }
+
+        public void GetMaterialOutItemList()
+        {
+            List<MaterialOutItem> listMatOutItems = db.MaterialOutItems.ToList();
+            ViewBag.MaterialOutItemsList = new SelectList(listMatOutItems, "MaterialOutItemId", "Name");
+        }
     }
 }

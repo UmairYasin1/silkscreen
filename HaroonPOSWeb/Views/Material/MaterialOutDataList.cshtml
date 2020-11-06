@@ -1,0 +1,210 @@
+﻿@model List<HaroonPOSWeb.Models.MaterialOutModel>
+@{
+    ViewBag.Title = "Material-Out List";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    HaroonPOSWebEntities db = new HaroonPOSWebEntities();
+}
+
+
+<div class="container-fluid">
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Material-In
+                <a href="#" data-toggle="modal" data-target="#MaterialOutDatamodal" class="btn btn-primary btn-icon-split" onclick="AddMaterialOutData(0)">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text">Add Data</span>
+                </a>
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @Html.Partial("_Notifications")
+                <table class="table table-bordered" id="materialOutDataList" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th hidden>MaterialOutId</th>
+                            <th>No</th>
+                            <th>Party</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>DCNumber</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th hidden>MaterialOutId</th>
+                            <th>No</th>
+                            <th>Party</th>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>DCNumber</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item != null)
+                            {
+                                var partyName = db.MaterialOutParties.Where(x => x.MatOutPartyId.Equals(item.MatOutPartyId.Value)).Select(x => x.Name).FirstOrDefault();
+                                var outItem = db.MaterialOutItems.Where(x => x.MaterialOutItemId.Equals(item.MaterialOutItemId.Value)).Select(x => x.Name).FirstOrDefault();
+                                <tr>
+                                    <td hidden>@Html.DisplayFor(modelItem => item.MaterialOutId)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MaterialOutNo)</td>
+                                    <td>@Html.DisplayFor(modelItem => partyName)</td>
+                                    <td>@Html.DisplayFor(modelItem => outItem)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Rate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DCNumber)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreateDate, new { @class = "createDateClass" })</td>
+                                    <td>
+                                        <button class="btn btn-info" onclick="ViewMaterialOutData('@item.MaterialOutId')"><i class="fa fa-eye"></i></button>
+                                        <button class="btn btn-success" onclick="EditMaterialOutData('@item.MaterialOutId')"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" onclick="ConfirmDeleteMaterialOutData('@item.MaterialOutId')"><i class="fa fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Model -->
+<div class="modal fade" id="MaterialOutDatamodal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="MaterialOutDatadiv">
+
+        </div>
+    </div>
+</div>
+<!-- Edit Modal -->
+<div id="MaterialOutDataEditModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="MaterialOutDataEditModaldiv">
+        </div>
+    </div>
+</div>
+<!-- View Modal -->
+<div id="ViewMaterialOutData" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Detail</h4>
+            </div>
+            <div class="modal-body" id="ViewMaterialOutDatadiv">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteMaterialOutData">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-primary">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <h5>Are you sure ? You want to delete this. </h5>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-danger" onclick="DeleteMaterialOutData()">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="hiddenMaterialOutDataId" />
+
+
+
+@section scripts{
+
+    <script>
+
+        var tableMaterial;
+
+        $(document).ready(function () {
+            tableMaterial = $('#materialOutDataList').dataTable();
+        });
+        var AddMaterialOutData = function (MaterialOutId) {
+            var url = "/Material/MaterialOutDataSetup";
+            $("#MaterialOutDatadiv").load(url, function () {
+                $("#MaterialOutDatamodal").modal("show");
+                $("#title").text("Add");
+            });
+        }
+
+        var EditMaterialOutData = function (MaterialOutId) {
+            var url = "/Material/MaterialOutDataEditView?MaterialOutId=" + MaterialOutId;
+            $("#MaterialOutDataEditModaldiv").load(url, function () {
+                $("#MaterialOutDataEditModal").modal("show");
+                $("#title").text("Edit");
+            });
+        }
+
+        var ViewMaterialOutData = function (MaterialOutId) {
+            var url = "/Material/ViewMaterialOutData?MaterialOutId=" + MaterialOutId;
+            $("#ViewMaterialOutDatadiv").load(url, function () {
+                $("#ViewMaterialOutData").modal("show");
+            })
+        }
+
+        var ConfirmDeleteMaterialOutData = function (MaterialOutId) {
+            $("#hiddenMaterialOutDataId").val(MaterialOutId);
+            $("#DeleteMaterialOutData").modal('show');
+
+        }
+
+        var DeleteMaterialOutData = function () {
+            var MaterialOutId = $("#hiddenMaterialOutDataId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Material/DeleteMaterialOutData",
+                data: { MaterialOutId: MaterialOutId },
+                success: function (data) {
+                    if (data.success) {
+                        $("#DeleteMaterialOutData").modal("hide");
+                        swal({
+                            title: "Good job!",
+                            text: data.message,
+                            type: "success"
+                        },
+                        function () {
+                            location.reload();
+                        })
+                    }
+                    else {
+                        swal({
+                            title: "Warning!",
+                            text: data.message,
+                            type: "error"
+                        })
+                    }
+                }
+
+            });
+
+        }
+
+        $(function () {
+            $('.createDateClass').each(function () {
+                var d = moment($(this).attr('.createDateClass'));
+                $(this).html(d.format());
+            });
+        });
+    </script>
+}

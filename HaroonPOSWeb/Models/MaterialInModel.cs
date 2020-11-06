@@ -9,12 +9,15 @@ namespace HaroonPOSWeb.Models
     public class MaterialInModel
     {
         public int MaterialInId { get; set; }
+
         public string MaterialInNo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Select purchaser")]
         public Nullable<int> MatInPurchaserId { get; set; }
 
-        [Required]
+        public string MatInPurchaserName { get; set; }
+
+        [Required(ErrorMessage = "Fill item")]
         public string PurchaseItem { get; set; }
 
         [Required]
@@ -34,7 +37,9 @@ namespace HaroonPOSWeb.Models
 
         [Required]
         public Nullable<decimal> Cartridge { get; set; }
+
         public Nullable<System.DateTime> CreateDate { get; set; }
+
         public Nullable<bool> IsActive { get; set; }
     }
 }

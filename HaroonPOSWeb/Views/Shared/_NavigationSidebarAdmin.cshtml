@@ -17,32 +17,33 @@
         </a>
     </li>
     <hr class="sidebar-divider">
-    <li class="nav-item active">
-        <a class="nav-link" href="/Material/MaterialInPurchaserList">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Material In Puchaser</span>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Material Data</span>
         </a>
-    </li>
-    <hr class="sidebar-divider">
-    <li class="nav-item active">
-        <a class="nav-link" href="/Material/MaterialOutItemList">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Material Out Item</span>
-        </a>
-    </li>
-    <hr class="sidebar-divider">
-    <li class="nav-item active">
-        <a class="nav-link" href="/Material/MaterialOutPartyList">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Material Out Party</span>
-        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/Material/MaterialInPurchaserList">Material In Puchaser</a>
+                <a class="collapse-item" href="/Material/MaterialOutItemList">Material Out Item</a>
+                <a class="collapse-item" href="/Material/MaterialOutPartyList">Material Out Party</a>
+            </div>
+        </div>
     </li>
 
     <hr class="sidebar-divider">
     <li class="nav-item active">
         <a class="nav-link" href="/Material/MaterialInDataList">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Material In</span>
+            <span>Material In List</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+    <li class="nav-item active">
+        <a class="nav-link" href="/Material/MaterialOutDataList">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Material Out List</span>
         </a>
     </li>
 
@@ -51,6 +52,13 @@
         <a class="nav-link" href="/Report/PartyPurchaseLedger">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Party Purchase Ledger</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item active">
+        <a class="nav-link" href="/Report/PartySaleLedger">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Party Sale Ledger</span>
         </a>
     </li>
     @*<hr class="sidebar-divider">

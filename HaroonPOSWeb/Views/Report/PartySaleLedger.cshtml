@@ -1,18 +1,18 @@
-﻿@model HaroonPOSWeb.Models.PartyPurchaseLedgerModel
+﻿@model HaroonPOSWeb.Models.PartyPurchaseSaleModel
 @{
-    ViewBag.Title = "PartyPurchaseLedger";
+    ViewBag.Title = "PartySaleLedger";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="col-lg-12">
     <div class="card position-relative">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Party Purchase Ledger</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Party Sale Ledger</h6>
         </div>
         <div class="card-body">
             <div class="small mb-1">Please select party name:</div>
-            @Html.DropDownListFor(model => model.MatInPurchaserId, ViewBag.MatInPurchaserList as SelectList, "--select--")
-            @Html.ValidationMessageFor(model => model.MatInPurchaserId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.MatOutPartyId, ViewBag.MaterialOutPartiesList as SelectList, "--select--")
+            @Html.ValidationMessageFor(model => model.MatOutPartyId, "", new { @class = "text-danger" })
         </div>
         <div class="card-body">
             <div class="small mb-1">Please select month:</div>
@@ -27,7 +27,7 @@
         <div class="card-body">
             <div class="small mb-1">Download report:</div>
             <div class="pull-right">
-                <i id="spanPartyPurchaseLedgerDownload" class="fa fa-download"></i>
+                <i id="spanPartySaleLedgerDownload" class="fa fa-download"></i>
             </div>
         </div>
     </div>
@@ -35,17 +35,17 @@
 
 @section scripts{
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
-        $("#spanPartyPurchaseLedgerDownload").click(function () {
-            
-            var MatInPurchaserId = $('#MatInPurchaserId').val();
+        $("#spanPartySaleLedgerDownload").click(function () {
+
+            var MatOutPartyId = $('#MatOutPartyId').val();
             var MonthId = $('#MonthId').val();
             var YearId = $('#YearId').val();
-            if (MatInPurchaserId == "" || MatInPurchaserId == 0)
+            if (MatOutPartyId == "" || MatOutPartyId == 0)
             {
-                alert('Please select purchaser name');
+                alert('Please select party name');
             }
             else if (MonthId == "" || MonthId == 0)
             {
@@ -58,11 +58,10 @@
             else
             {
                 //window.open('/Home/CreatePdfNewSales?selectedDateVal=' + selectedDate, "_blank");
-                //window.open('/Report/CreatePdfPartyPurchaseLedger?MatInPurchaserId=' + MatInPurchaserId, "_blank");
-                window.open('/Report/CreatePdfPartyPurchaseLedger?stringValues=' + MatInPurchaserId + '?MonthId=' + MonthId + '?YearId=' + YearId, "_blank");
+                //window.open('/Report/CreatePdfPartySaleLedger?MatOutPartyId=' + MatOutPartyId, "_blank");
+                window.open('/Report/CreatePdfPartySaleLedger?stringValues=' + MatOutPartyId + '?MonthId=' + MonthId + '?YearId=' + YearId, "_blank");
             }
         });
     </script>
-    
-}
 
+}

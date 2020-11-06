@@ -1,0 +1,70 @@
+﻿@model HaroonPOSWeb.Models.MaterialOutModel
+@{
+    ViewBag.Title = "Material Out";
+    Layout = null;
+}
+@using (Html.BeginForm("MaterialOutDataSetup", "Material", FormMethod.Post, new { role = "form" }))
+{
+    <div class="modal-header">
+        <h5 class="modal-title"><label id="title"></label></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            @Html.HiddenFor(m => m.MaterialOutId)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Party </label>
+                        @Html.DropDownListFor(model => model.MatOutPartyId, ViewBag.MaterialOutPartiesList as SelectList, "--select--")
+                        @Html.ValidationMessageFor(model => model.MatOutPartyId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Item </label>
+                        @Html.DropDownListFor(model => model.MaterialOutItemId, ViewBag.MaterialOutItemsList as SelectList, "--select--")
+                        @Html.ValidationMessageFor(model => model.MaterialOutItemId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Quantity </label>
+                        @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Rate </label>
+                        @Html.TextBoxFor(model => model.Rate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Description </label>
+                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">DCNumber </label>
+                        @Html.TextBoxFor(model => model.DCNumber, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DCNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="send" value="Save" id="btnMaterial" class="btn btn-primary waves-effect" />
+    </div>
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
