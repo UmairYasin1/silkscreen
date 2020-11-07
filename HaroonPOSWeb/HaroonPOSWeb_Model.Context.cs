@@ -42,5 +42,6 @@ namespace HaroonPOSWeb
         public virtual DbSet<WebUser> WebUsers { get; set; }
         public virtual DbSet<Month> Months { get; set; }
         public virtual DbSet<Year> Years { get; set; }
+        public virtual DbSet<StockData> StockDatas { get; set; }
     }
 }

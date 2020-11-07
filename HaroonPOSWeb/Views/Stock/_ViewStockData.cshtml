@@ -1,0 +1,36 @@
+﻿
+
+<div class="form-body">
+    @if (ViewBag.ViewStockDataList != null)
+    {
+        foreach (var item in ViewBag.ViewStockDataList)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td><b>Item</b></td>
+                                <td>@item.ItemName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Quantity</b></td>
+                                <td>@item.Quantity</td>
+                            </tr>
+                            <tr>
+                                <td><b>Rate</b></td>
+                                <td>@item.Rate</td>
+                            </tr>
+                            <tr>
+                                <td><b>Date</b></td>
+                                <td>@item.Date.ToString("dd-MMM-yyyy")</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+

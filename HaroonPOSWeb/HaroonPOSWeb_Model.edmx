@@ -170,6 +170,18 @@
           <Property Name="MonthId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MonthName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="StockData">
+          <Key>
+            <PropertyRef Name="StockDataId" />
+          </Key>
+          <Property Name="StockDataId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Rate" Type="money" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
         <EntityType Name="UserRight">
           <Key>
             <PropertyRef Name="UserRightsId" />
@@ -298,6 +310,7 @@
           <EntitySet Name="MaterialOutItem" EntityType="Self.MaterialOutItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialOutParty" EntityType="Self.MaterialOutParty" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Month" EntityType="Self.Month" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockData" EntityType="Self.StockData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRight" EntityType="Self.UserRight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebUsers" EntityType="Self.WebUsers" Schema="dbo" store:Type="Tables" />
@@ -353,6 +366,7 @@
           </AssociationSet>
           <EntitySet Name="Months" EntityType="HaroonPOSWebModel.Month" />
           <EntitySet Name="Years" EntityType="HaroonPOSWebModel.Year" />
+          <EntitySet Name="StockDatas" EntityType="HaroonPOSWebModel.StockData" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -606,6 +620,18 @@
           <Property Name="YearId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="YearName" Type="Int32" />
         </EntityType>
+        <EntityType Name="StockData">
+          <Key>
+            <PropertyRef Name="StockDataId" />
+          </Key>
+          <Property Name="StockDataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -845,6 +871,19 @@
               <MappingFragment StoreEntitySet="Year">
                 <ScalarProperty Name="YearName" ColumnName="YearName" />
                 <ScalarProperty Name="YearId" ColumnName="YearId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockDatas">
+            <EntityTypeMapping TypeName="HaroonPOSWebModel.StockData">
+              <MappingFragment StoreEntitySet="StockData">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="StockDataId" ColumnName="StockDataId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -247,6 +247,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
@@ -298,11 +299,15 @@
     <Compile Include="Models\MaterialOutPartyModel.cs" />
     <Compile Include="Models\PartyPurchaseLedgerModel.cs" />
     <Compile Include="Models\PartyPurchaseSaleModel.cs" />
+    <Compile Include="Models\StockDataModel.cs" />
     <Compile Include="Month.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="StockData.cs">
+      <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserRight.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
@@ -4439,6 +4444,9 @@
     <Content Include="Views\Material\_ViewMaterialOutData.cshtml" />
     <Content Include="Views\Material\_ViewMaterialInData.cshtml" />
     <Content Include="Views\Report\PartySaleLedger.cshtml" />
+    <Content Include="Views\Stock\StockDataList.cshtml" />
+    <Content Include="Views\Stock\StockDataSetup.cshtml" />
+    <Content Include="Views\Stock\_ViewStockData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

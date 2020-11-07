@@ -1,0 +1,69 @@
+﻿@model HaroonPOSWeb.Models.StockDataModel
+@{
+    ViewBag.Title = "Stock Setup";
+    Layout = null;
+}
+@using (Html.BeginForm("StockDataSetup", "Stock", FormMethod.Post, new { role = "form" }))
+{
+    <div class="modal-header">
+        <h5 class="modal-title"><label id="title"></label></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            @Html.HiddenFor(m => m.StockDataId)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Item </label>
+                        @Html.TextBoxFor(model => model.ItemName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Quantity </label>
+                        @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Rate </label>
+                        @Html.TextBoxFor(model => model.Rate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @if (Model.Date != null)
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Date </label>
+                            @Html.TextBoxFor(model => model.Date, new { @type = "date", @class = "form-control datepicker", @Value = Model.Date.Value.ToString("mm-dd-yyyy") })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Date </label>
+                            @Html.TextBoxFor(model => model.Date, new { @type = "date", @class = "form-control datepicker" })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="send" value="Save" id="btnStock" class="btn btn-primary waves-effect" />
+    </div>
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
