@@ -36,26 +36,15 @@
                         @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                @if (Model.Date != null)
-                {
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label">Date </label>
-                            @Html.TextBoxFor(model => model.Date, new { @type = "date", @class = "form-control datepicker", @Value = Model.Date.Value.ToString("mm-dd-yyyy") })
-                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                        </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Date </label>
+                        @*@Html.TextBoxFor(model => model.Date, new { @type = "date", @class = "form-control datepicker", @Value = Model.Date.Value.ToString("0:yyyy-MM-dd") })*@
+                        @Html.TextBoxFor(m => m.Date, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
                     </div>
-                }
-                else
-                {
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="control-label">Date </label>
-                            @Html.TextBoxFor(model => model.Date, new { @type = "date", @class = "form-control datepicker" })
-                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                }
+                </div>
+                
             </div>
         </div>
     </div>

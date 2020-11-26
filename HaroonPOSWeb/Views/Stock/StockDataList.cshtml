@@ -55,7 +55,7 @@
                                     <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Rate)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Date, new { @class = "createDateClass" })</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Date)</td>
                                     <td>
                                         <button class="btn btn-info" onclick="ViewStockData('@item.StockDataId')"><i class="fa fa-eye"></i></button>
                                         <button class="btn btn-success" onclick="EditStockData('@item.StockDataId')"><i class="fa fa-edit"></i></button>

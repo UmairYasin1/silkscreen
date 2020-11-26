@@ -14,7 +14,12 @@ namespace HaroonPOSWeb.Models
         [Required(ErrorMessage = "Please fill item")]
         public string ItemName { get; set; }
 
+        //[Required(ErrorMessage = "Please select date")]
+        //public Nullable<System.DateTime> Date { get; set; }
+
         [Required(ErrorMessage = "Please select date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> Date { get; set; }
 
         [Required(ErrorMessage = "Please fill quantity")]
