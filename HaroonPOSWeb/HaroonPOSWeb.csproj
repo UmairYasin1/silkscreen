@@ -300,6 +300,7 @@
     <Compile Include="Models\PartyPurchaseLedgerModel.cs" />
     <Compile Include="Models\PartyPurchaseSaleModel.cs" />
     <Compile Include="Models\StockDataModel.cs" />
+    <Compile Include="Models\StockReportModel.cs" />
     <Compile Include="Month.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
@@ -4447,6 +4448,7 @@
     <Content Include="Views\Stock\StockDataList.cshtml" />
     <Content Include="Views\Stock\StockDataSetup.cshtml" />
     <Content Include="Views\Stock\_ViewStockData.cshtml" />
+    <Content Include="Views\Report\StockReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
