@@ -24,10 +24,24 @@
             @Html.DropDownListFor(model => model.YearId, ViewBag.YearList as SelectList, "--select--")
             @Html.ValidationMessageFor(model => model.YearId, "", new { @class = "text-danger" })
         </div>
-        <div class="card-body">
+        @*<div class="card-body">
             <div class="small mb-1">Download report:</div>
             <div class="pull-right">
                 <i id="spanPartyPurchaseLedgerDownload" class="fa fa-download"></i>
+            </div>
+        </div>*@
+        <div class="card-body">
+            <div class="small mb-1">See report:</div>
+            <div class="pull-right">
+                @*<p><a href="~/Report/ShowPartyPurchaseLedger" class="btn btn-primary btn-lg">View</a></p>*@
+                <i id="spanPartyPurchaseLedgerView" class="btn btn-primary btn-lg">Download</i>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="small mb-1">Download report:</div>
+            <div class="pull-right">
+                @*<p><a href="~/Report/DownloadPartyPurchaseLedger" class="btn btn-primary btn-lg">Download</a></p>*@
+                <i id="spanPartyPurchaseLedgerDownload"  class="btn btn-primary btn-lg">Download</i>
             </div>
         </div>
     </div>
@@ -37,7 +51,7 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <script>
+    @*<script>
         $("#spanPartyPurchaseLedgerDownload").click(function () {
             
             var MatInPurchaserId = $('#MatInPurchaserId').val();
@@ -62,7 +76,52 @@
                 window.open('/Report/CreatePdfPartyPurchaseLedger?stringValues=' + MatInPurchaserId + '?MonthId=' + MonthId + '?YearId=' + YearId, "_blank");
             }
         });
-    </script>
+    </script>*@
+
+<script>
+    $("#spanPartyPurchaseLedgerView").click(function () {
+
+        var MatInPurchaserId = $('#MatInPurchaserId').val();
+        var MonthId = $('#MonthId').val();
+        var YearId = $('#YearId').val();
+        if (MatInPurchaserId == "" || MatInPurchaserId == 0) {
+            alert('Please select purchaser name');
+        }
+        else if (MonthId == "" || MonthId == 0) {
+            alert('Please select month');
+        }
+        else if (YearId == "" || YearId == 0) {
+            alert('Please select year');
+        }
+        else {
+            //window.open('/Home/CreatePdfNewSales?selectedDateVal=' + selectedDate, "_blank");
+            //window.open('/Report/CreatePdfPartyPurchaseLedger?MatInPurchaserId=' + MatInPurchaserId, "_blank");
+            window.open('/Report/ShowPartyPurchaseLedger?stringValues=' + MatInPurchaserId + '?MonthId=' + MonthId + '?YearId=' + YearId, "_blank");
+        }
+    });
+        $("#spanPartyPurchaseLedgerDownload").click(function () {
+
+            var MatInPurchaserId = $('#MatInPurchaserId').val();
+            var MonthId = $('#MonthId').val();
+            var YearId = $('#YearId').val();
+            if (MatInPurchaserId == "" || MatInPurchaserId == 0)
+            {
+                alert('Please select purchaser name');
+            }
+            else if (MonthId == "" || MonthId == 0)
+            {
+                alert('Please select month');
+            }
+            else if (YearId == "" || YearId == 0)
+            {
+                alert('Please select year');
+            }
+            else
+            {
+                window.open('/Report/DownloadPartyPurchaseLedger?stringValues=' + MatInPurchaserId + '?MonthId=' + MonthId + '?YearId=' + YearId, "_blank");
+            }
+        });
+</script>
     
 }
 

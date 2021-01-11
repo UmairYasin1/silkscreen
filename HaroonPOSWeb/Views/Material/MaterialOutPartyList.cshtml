@@ -27,7 +27,7 @@
                             <th hidden>MatOutPartyId</th>
                             <th>Name</th>
                             <th>Date</th>
-                            <th>IsActive</th>
+                            @*<th>IsActive</th>*@
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,7 +36,7 @@
                             <th hidden>MatOutPartyId</th>
                             <th>Name</th>
                             <th>Date</th>
-                            <th>IsActive</th>
+                            @*<th>IsActive</th>*@
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -49,14 +49,14 @@
                                     <td hidden>@Html.DisplayFor(modelItem => item.MatOutPartyId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CreateDate, new { @class = "createDateClass" })</td>
-                                    @if (item.IsActive == true)
+                                    @*@if (item.IsActive == true)
                                     {
                                         <td><span class="badge badge-success brd-rd5">Active</span></td>
                                     }
                                     else if (item.IsActive == false)
                                     {
                                         <td><span class="badge badge-danger brd-rd5">De-Active</span></td>
-                                    }
+                                    }*@
                                     <td>
                                         <button class="btn btn-info" onclick="ViewMaterialOutParty('@item.MatOutPartyId')"><i class="fa fa-eye"></i></button>
                                         <button class="btn btn-success" onclick="EditMaterialOutParty('@item.MatOutPartyId')"><i class="fa fa-edit"></i></button>

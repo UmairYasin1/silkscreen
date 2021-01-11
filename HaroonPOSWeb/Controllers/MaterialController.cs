@@ -207,7 +207,8 @@ namespace HaroonPOSWeb.Controllers
                 MaterialInPurchaser newMaterialInPurchaseradd = new MaterialInPurchaser();
                 newMaterialInPurchaseradd.Name = model.Name;
                 newMaterialInPurchaseradd.CreateDate = DateTime.Now;
-                newMaterialInPurchaseradd.IsActive = model.IsActive;
+                //newMaterialInPurchaseradd.IsActive = model.IsActive;
+                newMaterialInPurchaseradd.IsActive = true;
                 db.MaterialInPurchasers.Add(newMaterialInPurchaseradd);
                 db.SaveChanges();
                 ModelState.Clear();
@@ -217,7 +218,8 @@ namespace HaroonPOSWeb.Controllers
             else
             {
                 materialInPurchaser.Name = model.Name;
-                materialInPurchaser.IsActive = model.IsActive;
+                //materialInPurchaser.IsActive = model.IsActive;
+                materialInPurchaser.IsActive = true;
                 db.SaveChanges();
                 model = null;
                 this.AddNotification("Thats great! Successfully Edited.", NotificationType.SUCCESS);
@@ -326,7 +328,8 @@ namespace HaroonPOSWeb.Controllers
                 MaterialOutItem newMaterialOutItemadd = new MaterialOutItem();
                 newMaterialOutItemadd.Name = model.Name;
                 newMaterialOutItemadd.CreateDate = DateTime.Now;
-                newMaterialOutItemadd.IsActive = model.IsActive;
+                //newMaterialOutItemadd.IsActive = model.IsActive;
+                newMaterialOutItemadd.IsActive = true;
                 db.MaterialOutItems.Add(newMaterialOutItemadd);
                 db.SaveChanges();
                 ModelState.Clear();
@@ -336,7 +339,8 @@ namespace HaroonPOSWeb.Controllers
             else
             {
                 materialOutItem.Name = model.Name;
-                materialOutItem.IsActive = model.IsActive;
+                //materialOutItem.IsActive = model.IsActive;
+                materialOutItem.IsActive = true;
                 db.SaveChanges();
                 model = null;
                 this.AddNotification("Thats great! Successfully Edited.", NotificationType.SUCCESS);
@@ -444,7 +448,8 @@ namespace HaroonPOSWeb.Controllers
                 MaterialOutParty newMaterialOutPartyadd = new MaterialOutParty();
                 newMaterialOutPartyadd.Name = model.Name;
                 newMaterialOutPartyadd.CreateDate = DateTime.Now;
-                newMaterialOutPartyadd.IsActive = model.IsActive;
+                //newMaterialOutPartyadd.IsActive = model.IsActive;
+                newMaterialOutPartyadd.IsActive = true;
                 db.MaterialOutParties.Add(newMaterialOutPartyadd);
                 db.SaveChanges();
                 ModelState.Clear();
@@ -454,7 +459,8 @@ namespace HaroonPOSWeb.Controllers
             else
             {
                 materialOutParty.Name = model.Name;
-                materialOutParty.IsActive = model.IsActive;
+                //materialOutParty.IsActive = model.IsActive;
+                materialOutParty.IsActive = true;
                 db.SaveChanges();
                 model = null;
                 this.AddNotification("Thats great! Successfully Edited.", NotificationType.SUCCESS);
