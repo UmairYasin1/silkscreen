@@ -172,6 +172,7 @@ namespace HaroonPOSWeb.Controllers
                     {
                         MatInPurchaserId = item.MatInPurchaserId,
                         Name = item.Name,
+                        OpeningBalance = item.OpeningBalance.Value,
                         CreateDate = item.CreateDate.Value,
                         IsActive = item.IsActive.Value                        
                     });
@@ -206,6 +207,7 @@ namespace HaroonPOSWeb.Controllers
             {
                 MaterialInPurchaser newMaterialInPurchaseradd = new MaterialInPurchaser();
                 newMaterialInPurchaseradd.Name = model.Name;
+                newMaterialInPurchaseradd.OpeningBalance = model.OpeningBalance;
                 newMaterialInPurchaseradd.CreateDate = DateTime.Now;
                 //newMaterialInPurchaseradd.IsActive = model.IsActive;
                 newMaterialInPurchaseradd.IsActive = true;
@@ -218,6 +220,7 @@ namespace HaroonPOSWeb.Controllers
             else
             {
                 materialInPurchaser.Name = model.Name;
+                materialInPurchaser.OpeningBalance = model.OpeningBalance;
                 //materialInPurchaser.IsActive = model.IsActive;
                 materialInPurchaser.IsActive = true;
                 db.SaveChanges();
@@ -236,6 +239,7 @@ namespace HaroonPOSWeb.Controllers
             if (newFitCat != null)
             {
                 model.Name = newFitCat.Name;
+                model.OpeningBalance = newFitCat.OpeningBalance.Value;
                 model.IsActive = newFitCat.IsActive.Value;
             }
             return View("MaterialInPurchaserSetup", model);
@@ -413,6 +417,7 @@ namespace HaroonPOSWeb.Controllers
                     {
                         MatOutPartyId = item.MatOutPartyId,
                         Name = item.Name,
+                        OpeningBalance = item.OpeningBalance.Value,
                         CreateDate = item.CreateDate.Value,
                         IsActive = item.IsActive.Value
                     });
@@ -447,6 +452,7 @@ namespace HaroonPOSWeb.Controllers
             {
                 MaterialOutParty newMaterialOutPartyadd = new MaterialOutParty();
                 newMaterialOutPartyadd.Name = model.Name;
+                newMaterialOutPartyadd.OpeningBalance = model.OpeningBalance;
                 newMaterialOutPartyadd.CreateDate = DateTime.Now;
                 //newMaterialOutPartyadd.IsActive = model.IsActive;
                 newMaterialOutPartyadd.IsActive = true;
@@ -459,6 +465,7 @@ namespace HaroonPOSWeb.Controllers
             else
             {
                 materialOutParty.Name = model.Name;
+                materialOutParty.OpeningBalance = model.OpeningBalance;
                 //materialOutParty.IsActive = model.IsActive;
                 materialOutParty.IsActive = true;
                 db.SaveChanges();
@@ -477,6 +484,7 @@ namespace HaroonPOSWeb.Controllers
             if (newFitCat != null)
             {
                 model.Name = newFitCat.Name;
+                model.OpeningBalance = newFitCat.OpeningBalance.Value;
                 model.IsActive = newFitCat.IsActive.Value;
             }
             return View("MaterialOutPartySetup", model);

@@ -16,6 +16,7 @@ namespace HaroonPOSWeb
     {
         public int MatOutPartyId { get; set; }
         public string Name { get; set; }
+        public Nullable<decimal> OpeningBalance { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
     }

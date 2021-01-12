@@ -125,6 +125,7 @@
           </Key>
           <Property Name="MatInPurchaserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="OpeningBalance" Type="money" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
@@ -160,6 +161,7 @@
           </Key>
           <Property Name="MatOutPartyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="OpeningBalance" Type="money" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
@@ -349,9 +351,12 @@
           <EntitySet Name="MaterialOuts" EntityType="HaroonPOSWebModel.MaterialOut" />
           <EntitySet Name="MaterialOutItems" EntityType="HaroonPOSWebModel.MaterialOutItem" />
           <EntitySet Name="MaterialOutParties" EntityType="HaroonPOSWebModel.MaterialOutParty" />
+          <EntitySet Name="Months" EntityType="HaroonPOSWebModel.Month" />
+          <EntitySet Name="StockDatas" EntityType="HaroonPOSWebModel.StockData" />
           <EntitySet Name="UserRights" EntityType="HaroonPOSWebModel.UserRight" />
           <EntitySet Name="UserRoles" EntityType="HaroonPOSWebModel.UserRole" />
           <EntitySet Name="WebUsers" EntityType="HaroonPOSWebModel.WebUser" />
+          <EntitySet Name="Years" EntityType="HaroonPOSWebModel.Year" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="HaroonPOSWebModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -364,9 +369,6 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Months" EntityType="HaroonPOSWebModel.Month" />
-          <EntitySet Name="Years" EntityType="HaroonPOSWebModel.Year" />
-          <EntitySet Name="StockDatas" EntityType="HaroonPOSWebModel.StockData" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -486,6 +488,7 @@
           </Key>
           <Property Name="MatInPurchaserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OpeningBalance" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
@@ -521,6 +524,26 @@
           </Key>
           <Property Name="MatOutPartyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OpeningBalance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Month">
+          <Key>
+            <PropertyRef Name="MonthId" />
+          </Key>
+          <Property Name="MonthId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MonthName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StockData">
+          <Key>
+            <PropertyRef Name="StockDataId" />
+          </Key>
+          <Property Name="StockDataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
@@ -574,6 +597,13 @@
           <Property Name="DeviceId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HeadLine" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="YearId" />
+          </Key>
+          <Property Name="YearId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YearName" Type="Int32" />
+        </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="HaroonPOSWebModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -606,32 +636,6 @@
           <End Type="HaroonPOSWebModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="HaroonPOSWebModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="Month">
-          <Key>
-            <PropertyRef Name="MonthId" />
-          </Key>
-          <Property Name="MonthId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MonthName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Year">
-          <Key>
-            <PropertyRef Name="YearId" />
-          </Key>
-          <Property Name="YearId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="YearName" Type="Int32" />
-        </EntityType>
-        <EntityType Name="StockData">
-          <Key>
-            <PropertyRef Name="StockDataId" />
-          </Key>
-          <Property Name="StockDataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -754,6 +758,7 @@
               <MappingFragment StoreEntitySet="MaterialInPurchaser">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="MatInPurchaserId" ColumnName="MatInPurchaserId" />
               </MappingFragment>
@@ -792,8 +797,30 @@
               <MappingFragment StoreEntitySet="MaterialOutParty">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="MatOutPartyId" ColumnName="MatOutPartyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Months">
+            <EntityTypeMapping TypeName="HaroonPOSWebModel.Month">
+              <MappingFragment StoreEntitySet="Month">
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockDatas">
+            <EntityTypeMapping TypeName="HaroonPOSWebModel.StockData">
+              <MappingFragment StoreEntitySet="StockData">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="StockDataId" ColumnName="StockDataId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -850,22 +877,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="HaroonPOSWebModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="Months">
-            <EntityTypeMapping TypeName="HaroonPOSWebModel.Month">
-              <MappingFragment StoreEntitySet="Month">
-                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
-                <ScalarProperty Name="MonthId" ColumnName="MonthId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Years">
             <EntityTypeMapping TypeName="HaroonPOSWebModel.Year">
               <MappingFragment StoreEntitySet="Year">
@@ -874,19 +885,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StockDatas">
-            <EntityTypeMapping TypeName="HaroonPOSWebModel.StockData">
-              <MappingFragment StoreEntitySet="StockData">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="StockDataId" ColumnName="StockDataId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="HaroonPOSWebModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

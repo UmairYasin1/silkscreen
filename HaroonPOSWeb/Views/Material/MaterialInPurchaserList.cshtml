@@ -26,6 +26,7 @@
                         <tr>
                             <th hidden>MatInPurchaserId</th>
                             <th>Name</th>
+                            <th>Opening Balance</th>
                             <th>Date</th>
                             @*<th>IsActive</th>*@
                             <th>Action</th>
@@ -35,6 +36,7 @@
                         <tr>
                             <th hidden>MatInPurchaserId</th>
                             <th>Name</th>
+                            <th>Opening Balance</th>
                             <th>Date</th>
                             @*<th>IsActive</th>*@
                             <th>Action</th>
@@ -48,6 +50,7 @@
                                 <tr>
                                     <td hidden>@Html.DisplayFor(modelItem => item.MatInPurchaserId)</td>
                                     <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.OpeningBalance)</td>
                                     <td>@Html.DisplayFor(modelItem => item.CreateDate, new { @class = "createDateClass" })</td>
                                     @*@if (item.IsActive == true)
                                     {

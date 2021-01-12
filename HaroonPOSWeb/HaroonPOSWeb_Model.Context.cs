@@ -37,11 +37,11 @@ namespace HaroonPOSWeb
         public virtual DbSet<MaterialOut> MaterialOuts { get; set; }
         public virtual DbSet<MaterialOutItem> MaterialOutItems { get; set; }
         public virtual DbSet<MaterialOutParty> MaterialOutParties { get; set; }
+        public virtual DbSet<Month> Months { get; set; }
+        public virtual DbSet<StockData> StockDatas { get; set; }
         public virtual DbSet<UserRight> UserRights { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<WebUser> WebUsers { get; set; }
-        public virtual DbSet<Month> Months { get; set; }
         public virtual DbSet<Year> Years { get; set; }
-        public virtual DbSet<StockData> StockDatas { get; set; }
     }
 }
