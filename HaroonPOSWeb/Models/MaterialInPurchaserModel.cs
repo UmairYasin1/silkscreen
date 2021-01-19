@@ -16,6 +16,9 @@ namespace HaroonPOSWeb.Models
         [Required]
         public Nullable<decimal> OpeningBalance { get; set; }
 
+        [Required(ErrorMessage ="Please select date")]
+        public Nullable<System.DateTime> OB_Date { get; set; }
+
         public Nullable<System.DateTime> CreateDate { get; set; }
 
         public bool IsActive { get; set; }

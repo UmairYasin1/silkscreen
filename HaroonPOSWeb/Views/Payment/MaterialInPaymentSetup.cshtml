@@ -1,0 +1,57 @@
+﻿@model HaroonPOSWeb.Models.MaterialInPaymentModel
+@{
+    ViewBag.Title = "Material In Payment";
+    Layout = null;
+}
+@using (Html.BeginForm("MaterialInPaymentSetup", "Payment", FormMethod.Post, new { role = "form" }))
+{
+    <div class="modal-header">
+        <h5 class="modal-title"><label id="title"></label></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-body">
+            @Html.HiddenFor(m => m.MaterialInPayId)
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Purchaser </label>
+                       @Html.DropDownListFor(model => model.MatInPurchaserId, ViewBag.MatInPurchaserList as SelectList, "--select--")
+                        @Html.ValidationMessageFor(model => model.MatInPurchaserId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Payment </label>
+                        @Html.TextBoxFor(model => model.Payment, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Payment, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Short Description </label>
+                        @Html.TextBoxFor(model => model.ShortDescription, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Long Description </label>
+                        @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" name="send" value="Save" id="btnMaterial" class="btn btn-primary waves-effect" />
+    </div>
+}
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+

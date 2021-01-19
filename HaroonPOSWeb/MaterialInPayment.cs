@@ -12,13 +12,15 @@ namespace HaroonPOSWeb
     using System;
     using System.Collections.Generic;
     
-    public partial class MaterialInPurchaser
+    public partial class MaterialInPayment
     {
-        public int MatInPurchaserId { get; set; }
-        public string Name { get; set; }
-        public Nullable<decimal> OpeningBalance { get; set; }
-        public Nullable<System.DateTime> OB_Date { get; set; }
+        public int MaterialInPayId { get; set; }
+        public Nullable<int> MatInPurchaserId { get; set; }
+        public Nullable<bool> Debit { get; set; }
+        public Nullable<bool> Credit { get; set; }
+        public string ShortDescription { get; set; }
+        public string LongDescription { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public Nullable<decimal> Payment { get; set; }
     }
 }

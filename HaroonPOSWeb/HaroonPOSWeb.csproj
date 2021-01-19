@@ -279,6 +279,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="C__MigrationHistory.cs">
@@ -309,6 +310,9 @@
     <Compile Include="MaterialIn.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaterialInPayment.cs">
+      <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="MaterialInPurchaser.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
@@ -321,15 +325,20 @@
     <Compile Include="MaterialOutParty.cs">
       <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaterialOutPayment.cs">
+      <DependentUpon>HaroonPOSWeb_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MaterialInModel.cs" />
+    <Compile Include="Models\MaterialInPaymentModel.cs" />
     <Compile Include="Models\MaterialInPurchaserModel.cs" />
     <Compile Include="Models\MaterialModel.cs" />
     <Compile Include="Models\MaterialOutItemModel.cs" />
     <Compile Include="Models\MaterialOutModel.cs" />
     <Compile Include="Models\MaterialOutPartyModel.cs" />
+    <Compile Include="Models\MaterialOutPaymentModel.cs" />
     <Compile Include="Models\PartyPurchaseLedgerModel.cs" />
     <Compile Include="Models\PartyPurchaseSaleModel.cs" />
     <Compile Include="Models\ShowPartyPurchaseLedgerModel.cs" />
@@ -4486,6 +4495,9 @@
     <Content Include="Views\Stock\_ViewStockData.cshtml" />
     <Content Include="Views\Report\StockReport.cshtml" />
     <Content Include="Views\Report\ShowPartyPurchaseLedger.cshtml" />
+    <Content Include="Views\Payment\MaterialInPaymentList.cshtml" />
+    <Content Include="Views\Payment\MaterialInPaymentSetup.cshtml" />
+    <Content Include="Views\Payment\_ViewMaterialInPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

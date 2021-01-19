@@ -7,6 +7,7 @@ namespace HaroonPOSWeb.Models
 {
     public class ShowPartyPurchaseLedgerModel
     {
+        public string MatInPurchaserId { get; set; }
         public string PartyName { get; set; }
         public string Month { get; set; }
         public int ?Year { get; set; }

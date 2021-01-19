@@ -1,0 +1,39 @@
+﻿
+
+<div class="form-body">
+    @if (ViewBag.ViewMaterialInPaymentDataList != null)
+    {
+        foreach (var item in ViewBag.ViewMaterialInPaymentDataList)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tr hidden>
+                                <td><b>MaterialInPayId</b></td>
+                                <td>@item.MaterialInPayId</td>
+                            </tr>
+                            <tr>
+                                <td><b>Vendor</b></td>
+                                <td>@item.MatInPurchaserName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Payment</b></td>
+                                <td>@item.Payment</td>
+                            </tr>
+                            <tr>
+                                <td><b>Short Description</b></td>
+                                <td>@item.ShortDescription</td>
+                            </tr>
+                            <tr>
+                                <td><b>Long Description</b></td>
+                                <td>@item.LongDescription</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+

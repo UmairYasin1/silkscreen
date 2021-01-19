@@ -10,132 +10,209 @@
     decimal ?subAmount1 = 0;
     int ?subAmount2 = 0;
     int ?grandTotal = 0;
+
+    int? debit = 0;
+    int? credit = 0;
+    int? balance = 0;
 }
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+@*<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="~/Content/ReportStyle.css" rel="stylesheet" />
+<link href="~/Content/ReportStyle.css" rel="stylesheet" />*@
+<style type="text/css">
+    body, div, table, thead, tbody, tfoot, tr, th, td, p {
+        font-family: "Arial";
+        font-size: x-small;
+    }
+
+    a.comment-indicator:hover + comment {
+        background: #ffd;
+        position: absolute;
+        display: block;
+        border: 1px solid black;
+        padding: 0.5em;
+    }
+
+    a.comment-indicator {
+        background: red;
+        display: inline-block;
+        border: 1px solid black;
+        width: 0.5em;
+        height: 0.5em;
+    }
+
+    comment {
+        display: none;
+    }
+</style>
 <script>
         var val = window.location.href;
 </script>
 
-<div id="invoice">
-    <div class="toolbar hidden-print">
-        <div class="text-right">
-            @*<button id="printInvoice" class="btn btn-info"><i class="fa fa-print"></i> Print</button>
-                <button class="btn btn-info"><i class="fa fa-file-pdf-o"></i> Export as PDF</button>*@
-            <a href="~/Report/DownloadPartyPurchaseLedger" class="btn btn-info"
-               onclick="location.href = this.href + '?currentUrl=' + val; return false;">Download PDF</a>
-        </div>
-        <hr>
-    </div>
-    <div class="invoice overflow-auto">
-        <div style="min-width: 600px">
-            <header>
-                <div class="row">
-                    <div class="col">
-                        <a target="_blank" href="#">
-                            <img src="~/Images/logo.jpeg" data-holder-rendered="true" style="width:300px; height:200px;" />
-                        </a>
-                    </div>
-                    <div class="col company-details">
-                        <h2 class="name">
-                            <a target="_blank" href="#">
-                                Silk Screen
-                            </a>
-                        </h2>
-                        @*<div>455 Foggy Heights, AZ 85004, US</div>
-                        <div>(123) 456-789</div>
-                        <div>company@example.com</div>*@
-                    </div>
-                </div>
-            </header>
-            <main>
-                <div class="row contacts">
-                    <div class="col invoice-to">
-                        <h2 class="to">@Model.PartyName</h2>
-                        <div class="address">@Model.Month</div>
-                        <div class="address">@Model.Year</div>
-                        @*<div class="address">796 Silver Harbour, TX 79273, US</div>
-                        <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>*@
-                    </div>
-                    @*<div class="col invoice-details">
-                        <h1 class="invoice-id">INVOICE 3-2-1</h1>
-                        <div class="date">Date of Invoice: 01/10/2018</div>
-                        <div class="date">Due Date: 30/10/2018</div>
-                    </div>*@
-                </div>
-                <table border="0" cellspacing="0" cellpadding="0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Cartridge</th>
-                            <th>Purchase Item</th>
-                            <th>Quality</th>
-                            <th>Quantity</th>
-                            <th>Size</th>
-                            <th>Rate</th>
-                            <th>Sub Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.MaterialInModelList != null && Model.MaterialInModelList.Count != 0)
-                        {
-                            grandTotal = 0;
-                            //var last = Model.MaterialInModelList.Last();
-                            foreach (var item in Model.MaterialInModelList)
-                            {
-                                cartVal = item.Cartridge;
-                                quantityVal = item.Quantity;
-                                sizeVal = item.Size;
-                                rateVal = item.Rate;
-                                subAmount1 = quantityVal * sizeVal * rateVal;
-                                subAmount2 = Convert.ToInt32(cartVal + subAmount1);
-                                grandTotal += subAmount2;
 
-                                <tr>
-                                    <td class="no">01</td>
-                                    <td class="qty">@item.Cartridge.Value.ToString(".")</td>
-                                    <td class="text-left">@item.PurchaseItem</td>
-                                    <td class="text-left">@item.Quality</td>
-                                    <td class="qty">@item.Quantity.Value.ToString()</td>
-                                    <td class="qty">@item.Size.Value.ToString()</td>
-                                    <td class="unit">@item.Rate.Value.ToString(".")</td>
-                                    <td class="total">@subAmount2.Value.ToString(".")</td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                    <tfoot>
-                        @*<tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">SUBTOTAL</td>
-                            <td>$5,200.00</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">TAX 25%</td>
-                            <td>$1,300.00</td>
-                        </tr>*@
-                        <tr>
-                            <td colspan="2"></td>
-                            <td colspan="2">GRAND TOTAL</td>
-                            <td>@grandTotal</td>
-                        </tr>
-                    </tfoot>
-                </table>
-                @*<div class="thanks">Thank you!</div>
-                <div class="notices">
-                    <div>NOTICE:</div>
-                    <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-                </div>*@
-            </main>
-            <footer>
-                Report was created on a computer and is valid without the signature and seal.
-            </footer>
-        </div>
-        <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->
-        <div></div>
-    </div>
-</div>
+
+<table cellspacing="0" border="0">
+    <colgroup width="32"></colgroup>
+    <colgroup width="388"></colgroup>
+    <colgroup width="55"></colgroup>
+    <colgroup width="122"></colgroup>
+    <colgroup span="2" width="150"></colgroup>
+    <colgroup width="30"></colgroup>
+    <tbody>
+        <tr>
+            <td height="19" align="left" valign="middle" bgcolor="#CC0000"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td align="left" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" size="5" color="#A5A5A5"><br></font></b></td>
+            <td align="left" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" size="6" color="#4472C4"><br></font></b></td>
+            <td align="left" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" size="6" color="#4472C4"><br></font></b></td>
+            <td align="left" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" size="6" color="#4472C4"><br></font></b></td>
+            <td align="right" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" size="6" color="#4472C4"><br></font></b></td>
+            <td align="right" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" size="6" color="#4472C4"><br></font></b></td>
+        </tr>
+        <tr>
+            <td colspan="5" height="48" align="center" valign="middle"><font face="Roboto" size="6" color="#7F7F7F">INVOICE</font></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle"><b><font face="Roboto" color="#1F3864">Monthly Report</font></b></td>
+            <td align="left" valign="middle"><font face="Roboto" size="6" color="#7F7F7F"><br></font></td>
+        </tr>
+        <tr>
+            <td height="24" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="left" valign="middle"><b><font face="Roboto" color="#1F3864">BILL TO</font></b></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br>@Model.PartyName</font></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="left" valign="middle"><b><font face="Roboto" color="#1F3864"></font></b></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle"><b><font face="Roboto" color="#1F3864"></font></b></td>
+            <td align="center" valign="middle"><b><font face="Roboto" color="#1F3864"><br></font></b></td>
+        </tr>
+        <tr>
+            <td height="24" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td align="left" valign="middle"><font face="Roboto" color="#000000">&lt;Contact Name&gt;</font></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td align="left" valign="middle"><b><font face="Roboto" color="#000000">STICKER/CARTON</font></b></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle"><b><font face="Roboto" color="#1F3864">DATE</font></b></td>
+            <td align="center" valign="middle"><b><font face="Roboto" color="#1F3864"><br></font></b></td>
+        </tr>
+        <tr>
+            <td height="21" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td align="left" valign="middle"><font face="Roboto" color="#000000">&lt;Client Company Name&gt;</font></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td align="left" valign="middle"><b><font face="Roboto" color="#1F3864"><br></font></b></td>
+            <td colspan="2" align="right" valign="top"><i><font face="Roboto" color="#333F4F"><br></font></i></td>
+            <td align="left" valign="middle"><font face="Roboto" color="#1F3864"><br></font></td>
+        </tr>
+        <tr>
+            <td height="22" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td colspan="2" align="right" valign="top"><i><font face="Roboto" color="#333F4F">&lt;Payment terms (30 DAYS)&gt;</font></i></td>
+            <td align="left" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+        </tr>
+        <tr>
+            <td height="24" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td style="border-bottom: 1px solid #bfbfbf" colspan="2" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF"></font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Cartridge</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Purchase Item</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Quality</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Quantity</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Size</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Rate</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Sub Amount</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Debit</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Credit</font></b></td>
+            <td style="border-bottom: 1px solid #bfbfbf" align="center" valign="middle" bgcolor="#CC0000"><b><font face="Roboto" color="#FFFFFF">Balance</font></b></td>
+            <td align="center" valign="middle"><b><font face="Roboto" color="#1F3864"><br></font></b></td>
+        </tr>
+        @if (Model.MaterialInModelList != null && Model.MaterialInModelList.Count != 0)
+        {
+            grandTotal = 0;
+            //var last = Model.MaterialInModelList.Last();
+            foreach (var item in Model.MaterialInModelList)
+            {
+                cartVal = item.Cartridge;
+                quantityVal = item.Quantity;
+                sizeVal = item.Size;
+                rateVal = item.Rate;
+                subAmount1 = quantityVal * sizeVal * rateVal;
+                subAmount2 = Convert.ToInt32(cartVal + subAmount1);
+                grandTotal += subAmount2;
+                
+                <tr>
+                    <td height="24" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" colspan="2" align="left" valign="middle"><font face="Roboto" color="#000000"><br></font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" align="center" valign="middle" sdval="1000" sdnum="1033;"><font face="Roboto" color="#000000">@item.Cartridge.Value.ToString(".")</font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" align="right" valign="middle" sdval="1" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">@item.PurchaseItem</font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" align="right" valign="middle" sdval="1000" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">@item.Quality</font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" align="center" valign="middle" sdval="1000" sdnum="1033;"><font face="Roboto" color="#000000">@item.Quantity.Value.ToString()</font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" align="right" valign="middle" sdval="1" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">@item.Size.Value.ToString()</font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" align="right" valign="middle" sdval="1000" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">@item.Rate.Value.ToString()</font></td>
+                    <td style="border-bottom: 1px solid #bfbfbf; border-left: 1px solid #bfbfbf; border-right: 1px solid #bfbfbf" align="right" valign="middle" sdval="1000" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">@subAmount2.Value.ToString(".")</font></td>
+                    <td align="right" valign="middle" sdnum="1033;0;0.00"><font face="Roboto" color="#000000"><br></font></td>
+                </tr>
+            }
+
+        }
+        
+       
+        <tr>
+            <td height="26" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td style="border-top: 1px solid #bfbfbf" align="left" valign="middle"><font face="Roboto" color="#000000">Remarks / Payment Instructions:</font></td>
+            <td style="border-top: 1px solid #bfbfbf" align="left" valign="middle"><font face="Roboto" color="#000000"><br></font></td>
+            <td align="right" valign="bottom"><b><font face="Roboto" size="3" color="#333F4F"><br></font></b></td>
+            <td align="right" valign="middle"><b><font face="Roboto" size="1" color="#333F4F">Total</font></b></td>
+            <td style="border-top: 1px solid #bfbfbf; border-bottom: 1px solid #bfbfbf" align="right" valign="middle" sdval="1004" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">@grandTotal</font></td>
+            <td align="left" valign="middle" sdnum="1033;0;0.00"><font face="Roboto" color="#000000"><br></font></td>
+        </tr>
+        @*<tr>
+            <td height="26" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td colspan="2" rowspan="4" align="center" valign="middle"><font face="Roboto" color="#000000"><br></font></td>
+            <td align="right" valign="bottom"><b><font face="Roboto" size="3" color="#333F4F"><br></font></b></td>
+            <td align="right" valign="middle"><b><font face="Roboto" size="1" color="#333F4F">DISCOUNT</font></b></td>
+            <td style="border-top: 1px solid #bfbfbf; border-bottom: 1px solid #bfbfbf" align="right" valign="middle" sdval="0" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">0.00</font></td>
+            <td align="left" valign="middle" sdnum="1033;0;0.00"><font face="Roboto" color="#000000"><br></font></td>
+        </tr>
+        <tr>
+            <td height="26" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td align="right" valign="bottom"><b><font face="Roboto" size="3" color="#333F4F"><br></font></b></td>
+            <td align="right" valign="middle"><b><font face="Roboto" size="1" color="#333F4F">SUBTOTAL LESS DISCOUNT</font></b></td>
+            <td style="border-top: 1px solid #bfbfbf; border-bottom: 1px solid #bfbfbf" align="right" valign="middle" sdval="1004" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">1004.00</font></td>
+            <td align="left" valign="middle" sdnum="1033;0;0.00"><font face="Roboto" color="#000000"><br></font></td>
+        </tr>
+        <tr>
+            <td height="26" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td align="right" valign="bottom"><b><font face="Roboto" size="3" color="#333F4F"><br></font></b></td>
+            <td align="right" valign="middle"><b><font face="Roboto" size="1" color="#333F4F">TAX RATE</font></b></td>
+            <td style="border-top: 1px solid #bfbfbf; border-bottom: 1px solid #bfbfbf" align="right" valign="middle" sdval="0.12" sdnum="1033;0;0.00%"><font face="Roboto" color="#000000">12.00%</font></td>
+            <td align="left" valign="middle" sdnum="1033;0;0.00%"><font face="Roboto" color="#000000"><br></font></td>
+        </tr>
+        <tr>
+            <td height="26" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td align="right" valign="bottom"><b><font face="Roboto" size="3" color="#333F4F"><br></font></b></td>
+            <td align="right" valign="middle"><b><font face="Roboto" size="1" color="#333F4F">TOTAL TAX</font></b></td>
+            <td style="border-top: 1px solid #bfbfbf; border-bottom: 1px solid #bfbfbf" align="right" valign="middle" sdval="120.48" sdnum="1033;0;0.00"><font face="Roboto" color="#000000">120.48</font></td>
+            <td align="left" valign="middle" sdnum="1033;0;0.00"><font face="Roboto" color="#000000"><br></font></td>
+        </tr>
+        <tr>
+            <td height="45" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td colspan="2" align="center" valign="middle"><font face="Roboto" size="5" color="#333F4F"><br></font></td>
+            <td align="right" valign="bottom"><b><font face="Roboto" size="3" color="#333F4F"><br></font></b></td>
+            <td style="border-top: 1px solid #000000" align="right" valign="middle"><b><font face="Roboto" size="3" color="#333F4F">Balance Due</font></b></td>
+            <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" align="right" valign="middle" sdval="1124.48" sdnum="1033;0;_(* #,##0.00_);_(* \(#,##0.00\);_(* &quot;-&quot;??_);_(_)"><b><font face="Roboto" size="3"> 1,124.48 </font></b></td>
+            <td align="left" valign="middle" sdnum="1033;0;_-&quot;$&quot;* #,##0.00_-;-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-"><b><font face="Roboto"><br></font></b></td>
+        </tr>*@
+        <tr>
+            <td height="13" align="left" valign="bottom"><font face="Roboto"><br></font></td>
+            <td colspan="5" align="center" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+            <td align="center" valign="middle"><font face="Roboto" size="3" color="#000000"><br></font></td>
+        </tr>
+        <tr>
+            <td height="21" align="left" valign="bottom" bgcolor="#CC0000"><font face="Roboto"><br></font></td>
+            <td align="left" valign="bottom" bgcolor="#CC0000"><font face="Roboto"><br></font></td>
+            <td align="left" valign="bottom" bgcolor="#CC0000"><font face="Roboto"><br></font></td>
+            <td align="left" valign="bottom" bgcolor="#CC0000"><font face="Roboto"><br></font></td>
+            <td align="left" valign="bottom" bgcolor="#CC0000"><font face="Roboto"><br></font></td>
+            <td align="left" valign="bottom" bgcolor="#CC0000"><font face="Roboto"><br></font></td>
+            <td align="left" valign="bottom" bgcolor="#CC0000"><font face="Roboto"><br></font></td>
+        </tr>
+    </tbody>
+</table>

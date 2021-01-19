@@ -8,8 +8,8 @@
         <EntityTypeShape EntityType="HaroonPOSWebModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="HaroonPOSWebModel.AdminUser" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" />
-        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="3.625" />
-        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" />
         <EntityTypeShape EntityType="HaroonPOSWebModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" />
         <EntityTypeShape EntityType="HaroonPOSWebModel.Material" Width="1.5" PointX="4.75" PointY="6.75" />
         <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialIn" Width="1.5" PointX="6.75" PointY="6.75" />
@@ -26,6 +26,8 @@
         <AssociationConnector Association="HaroonPOSWebModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="HaroonPOSWebModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="HaroonPOSWebModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialInPayment" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="HaroonPOSWebModel.MaterialOutPayment" Width="1.5" PointX="7.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

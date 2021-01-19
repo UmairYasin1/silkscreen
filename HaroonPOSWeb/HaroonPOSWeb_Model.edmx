@@ -119,6 +119,19 @@
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="MaterialInPayment">
+          <Key>
+            <PropertyRef Name="MaterialInPayId" />
+          </Key>
+          <Property Name="MaterialInPayId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MatInPurchaserId" Type="int" />
+          <Property Name="Payment" Type="money" />
+          <Property Name="Debit" Type="bit" />
+          <Property Name="Credit" Type="bit" />
+          <Property Name="ShortDescription" Type="nvarchar(max)" />
+          <Property Name="LongDescription" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="MaterialInPurchaser">
           <Key>
             <PropertyRef Name="MatInPurchaserId" />
@@ -126,6 +139,7 @@
           <Property Name="MatInPurchaserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="OpeningBalance" Type="money" />
+          <Property Name="OB_Date" Type="date" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
@@ -164,6 +178,19 @@
           <Property Name="OpeningBalance" Type="money" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="MaterialOutPayment">
+          <Key>
+            <PropertyRef Name="MaterialOutPayId" />
+          </Key>
+          <Property Name="MaterialOutPayId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MatOutPartyId" Type="int" />
+          <Property Name="Payment" Type="money" />
+          <Property Name="Debit" Type="bit" />
+          <Property Name="Credit" Type="bit" />
+          <Property Name="ShortDescription" Type="nvarchar(max)" />
+          <Property Name="LongDescription" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Month">
           <Key>
@@ -307,10 +334,12 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialIn" EntityType="Self.MaterialIn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialInPayment" EntityType="Self.MaterialInPayment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialInPurchaser" EntityType="Self.MaterialInPurchaser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialOut" EntityType="Self.MaterialOut" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialOutItem" EntityType="Self.MaterialOutItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialOutParty" EntityType="Self.MaterialOutParty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialOutPayment" EntityType="Self.MaterialOutPayment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Month" EntityType="Self.Month" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockData" EntityType="Self.StockData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRight" EntityType="Self.UserRight" Schema="dbo" store:Type="Tables" />
@@ -369,6 +398,8 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="MaterialInPayments" EntityType="HaroonPOSWebModel.MaterialInPayment" />
+          <EntitySet Name="MaterialOutPayments" EntityType="HaroonPOSWebModel.MaterialOutPayment" />
         </EntityContainer>
         <EntityType Name="C__MigrationHistory">
           <Key>
@@ -489,6 +520,7 @@
           <Property Name="MatInPurchaserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OpeningBalance" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OB_Date" Type="DateTime" Precision="0" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
@@ -636,6 +668,32 @@
           <End Type="HaroonPOSWebModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="HaroonPOSWebModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="MaterialInPayment">
+          <Key>
+            <PropertyRef Name="MaterialInPayId" />
+          </Key>
+          <Property Name="MaterialInPayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatInPurchaserId" Type="Int32" />
+          <Property Name="Debit" Type="Boolean" />
+          <Property Name="Credit" Type="Boolean" />
+          <Property Name="ShortDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LongDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Payment" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="MaterialOutPayment">
+          <Key>
+            <PropertyRef Name="MaterialOutPayId" />
+          </Key>
+          <Property Name="MaterialOutPayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatOutPartyId" Type="Int32" />
+          <Property Name="Debit" Type="Boolean" />
+          <Property Name="Credit" Type="Boolean" />
+          <Property Name="ShortDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LongDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Payment" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -758,6 +816,7 @@
               <MappingFragment StoreEntitySet="MaterialInPurchaser">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OB_Date" ColumnName="OB_Date" />
                 <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="MatInPurchaserId" ColumnName="MatInPurchaserId" />
@@ -893,6 +952,34 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="MaterialInPayments">
+            <EntityTypeMapping TypeName="HaroonPOSWebModel.MaterialInPayment">
+              <MappingFragment StoreEntitySet="MaterialInPayment">
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="Debit" ColumnName="Debit" />
+                <ScalarProperty Name="MatInPurchaserId" ColumnName="MatInPurchaserId" />
+                <ScalarProperty Name="MaterialInPayId" ColumnName="MaterialInPayId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialOutPayments">
+            <EntityTypeMapping TypeName="HaroonPOSWebModel.MaterialOutPayment">
+              <MappingFragment StoreEntitySet="MaterialOutPayment">
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="Debit" ColumnName="Debit" />
+                <ScalarProperty Name="MatOutPartyId" ColumnName="MatOutPartyId" />
+                <ScalarProperty Name="MaterialOutPayId" ColumnName="MaterialOutPayId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
